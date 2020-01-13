@@ -57,4 +57,14 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(getName(), getEmail(), getTelephone(), getNotificationTypes());
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", notificationTypes=" + notificationTypes +
+                '}';
+    }
 }

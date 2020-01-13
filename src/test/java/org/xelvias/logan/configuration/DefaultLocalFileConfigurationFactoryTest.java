@@ -17,13 +17,13 @@ public class DefaultLocalFileConfigurationFactoryTest {
     DefaultLocalFileConfigurationFactory configurationFactory = new DefaultLocalFileConfigurationFactory();
 
     @Test
-    public void TestForExceptionOnInvalidLocation() throws ConfigurationNotFoundException {
+    public void TestFor_ExceptionOnInvalidLocation() throws ConfigurationNotFoundException {
         expectedException.expect(ConfigurationNotFoundException.class);
         configurationFactory.getConfiguration("invlaidpath");
     }
 
     @Test
-    public void TestFileNotBeingNull() throws ConfigurationNotFoundException{
+    public void TestFor_FileNotBeingNull() throws ConfigurationNotFoundException{
         Assert.assertNotNull(configurationFactory.getConfiguration("application.config"));
     }
 

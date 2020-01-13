@@ -20,14 +20,14 @@ public class LogPathBasedSkippableLogSourceFactoryTest {
     StateManager stateManager;
 
     @Test
-    public void ExpectLocalFileLogSource() throws IOException {
+    public void Should_Return_SkippableSource() throws IOException {
         LogSourceAbstractFactory logSourceFactory = new LogPathBasedSkippableLogSourceFactory(stateManager);
         LogSource logSource = logSourceFactory.createLogSource("application.config");
         Assert.assertThat(logSource,instanceOf(SkippableLocalFileLogSource.class));
     }
 
     @Test
-    public void ExpectNull() throws IOException {
+    public void Should_Return_Null_ForFTPLog() throws IOException {
         LogSourceAbstractFactory logSourceAbstractFactory = new LogPathBasedSkippableLogSourceFactory(stateManager);
         LogSource logSource = logSourceAbstractFactory.createLogSource("ftp://testing");
         Assert.assertNull(logSource);

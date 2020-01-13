@@ -7,7 +7,7 @@ import java.io.IOException;
 public interface LogMonitorFunction<T extends LogSource> extends Function {
 
     void loadlogs() throws IOException;
-    void notifyUsers();
+    void handleLogEvents();
     void updateDataSource(T logSource);
 
 

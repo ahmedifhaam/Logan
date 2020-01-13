@@ -1,8 +1,7 @@
 package org.xelvias.logan.state;
 
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -15,20 +14,12 @@ public class FileStateManagerTest {
     File file ;
 
 
-    @Before
-    public void CreateFileBeforeEachRun(){
-        file = new File("filestate.o");
-    }
 
-    @After
-    public void DeleteAfterEachRun(){
-        file.delete();
-    }
 
 
     @Test
-    public void TestForRuntimeValues() throws IOException {
-        FileStateManager fileStateManager = new FileStateManager("filestate.o");
+    public void TestFor_RuntimeValues() throws IOException {
+        FileStateManager fileStateManager = new FileStateManager();
         String key = "testkey";
         String value = "testvalue";
         fileStateManager.setValue(key,value);
@@ -36,8 +27,8 @@ public class FileStateManagerTest {
     }
 
     @Test
-    public void TestForLongValues() throws IOException{
-        FileStateManager fileStateManager = new FileStateManager("filestate.o");
+    public void TestFor_LongValuesConversion() throws IOException{
+        FileStateManager fileStateManager = new FileStateManager();
         String key = "/User/xelvias/home";
         Long value = 232556L;
         fileStateManager.setValue(key,Long.toString(value));
@@ -47,23 +38,23 @@ public class FileStateManagerTest {
     }
 
     @Test
-    public void TestForPersistence_ExpectNullValueWithoutSaving() throws IOException {
-        FileStateManager fileStateManager = new FileStateManager("filestate.o");
+    public void TestFor_Persistence_ExpectNullValue_WithoutSaving() throws IOException {
+        FileStateManager fileStateManager = new FileStateManager();
         String key = "testkey";
         String value = "testvalue";
         fileStateManager.setValue(key,value);
-        fileStateManager = new FileStateManager("filestate.o");
+        fileStateManager = new FileStateManager();
         Assert.assertNull(fileStateManager.getValue(key));
     }
 
     @Test
-    public void TestForPersistence_ExpectNotNullAfterSaving() throws IOException{
-        FileStateManager fileStateManager = new FileStateManager("filestate.o");
+    public void TestFor_Persistence_ExpectNotNullAfterSaving() throws IOException{
+        FileStateManager fileStateManager = new FileStateManager();
         String key = "testkey";
         String value = "testvalue";
         fileStateManager.setValue(key,value);
         fileStateManager.saveState();
-        fileStateManager = new FileStateManager("filestate.o");
+        fileStateManager = new FileStateManager();
         Assert.assertEquals(value,fileStateManager.getValue(key));
     }
 

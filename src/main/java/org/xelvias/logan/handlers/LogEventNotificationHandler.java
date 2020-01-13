@@ -1,5 +1,6 @@
 package org.xelvias.logan.handlers;
 
+import org.xelvias.logan.handlers.eligibilitystategy.Eligibility;
 import org.xelvias.logan.logs.events.LogEvent;
 import org.xelvias.logan.notifier.Notifier;
 

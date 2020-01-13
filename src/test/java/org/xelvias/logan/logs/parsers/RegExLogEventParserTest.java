@@ -36,14 +36,14 @@ public class RegExLogEventParserTest {
     }
 
     @Test
-    public void TestMessageValue(){
+    public void Should_Return_SavedMessageValue(){
         String in = "2019/03/22 08:51:01 INFO   :.main";
         LogEvent logEvent = logEventParser.parse(in);
         Assert.assertTrue(logEvent.getMessage().trim().equalsIgnoreCase(".main"));
     }
 
     @Test
-    public void TestDateValue() throws ParseException {
+    public void Should_Return_SavedDateValue() throws ParseException {
         String in = "2019/03/22 08:51:01 INFO   :.main";
         LogEvent logEvent = logEventParser.parse(in);
         Assert.assertTrue(logEvent.getTimestamp().equals(new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse("2019/03/22 08:51:01")));

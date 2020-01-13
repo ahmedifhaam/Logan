@@ -41,7 +41,7 @@ public class LogMonitorApplication implements Function{
         LOG.info("Starting Log Monitor Application");
         try {
             LOG.info("Configuration file loading");
-            Configuration configuration = configurationFactory.getConfiguration("sampleapplication.config");
+            Configuration configuration = configurationFactory.getConfiguration("application.config");
             Iterator<ClientAppConfiguration> allApplicationConfigs = configuration.getAllApplicationConfigs();
             LOG.info("Application Configurations loaded");
             while (allApplicationConfigs.hasNext()){

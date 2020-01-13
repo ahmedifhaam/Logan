@@ -33,7 +33,7 @@ public class SkippableLocalFileLogSourceTest {
     @Before
     public void setup() throws IOException {
         when(stateManager.getValue(any(String.class))).thenReturn("100");
-        localFileLogSource = new SkippableLocalFileLogSource("/Users/xelvias/Workings/Logan/src/test/resources/samplelogfile.log",stateManager);
+        localFileLogSource = new SkippableLocalFileLogSource("samplelogfile.log",stateManager);
     }
 
     @Test

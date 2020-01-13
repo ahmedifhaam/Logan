@@ -29,4 +29,12 @@ public class LogEventHandlerRequest implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "LogEventHandlerRequest{" +
+                "logEvent=" + logEvent +
+                ", user=" + user +
+                '}';
+    }
 }

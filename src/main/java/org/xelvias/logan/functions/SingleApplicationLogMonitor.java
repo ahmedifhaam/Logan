@@ -7,14 +7,13 @@ import org.xelvias.logan.configuration.configurationmodels.subelements.ClientApp
 import org.xelvias.logan.configuration.configurationmodels.subelements.User;
 import org.xelvias.logan.handlers.Handler;
 import org.xelvias.logan.handlers.LogEventHandlerRequest;
-import org.xelvias.logan.handlers.LogEventHandlerRequestEligibility;
+import org.xelvias.logan.handlers.LogEventLoggerHandler;
+import org.xelvias.logan.handlers.eligibilitystategy.ErrorLogEventHandlerRequestByTypeEligibility;
 import org.xelvias.logan.handlers.LogEventNotificationHandler;
-import org.xelvias.logan.logs.LogSourceAbstractFactory;
+import org.xelvias.logan.handlers.eligibilitystategy.InfoLogEventHandlerRequestByTypeEligibility;
 import org.xelvias.logan.logs.events.LogEvent;
 import org.xelvias.logan.logs.parsers.LogEventParser;
-import org.xelvias.logan.logs.source.LogSource;
 import org.xelvias.logan.logs.source.SkipableLogSource;
-import org.xelvias.logan.logs.source.SkippableLocalFileLogSource;
 import org.xelvias.logan.logs.source.SkippableLogSourceFactory;
 import org.xelvias.logan.notifier.EmailNotifier;
 import org.xelvias.logan.notifier.SmsNotifier;
@@ -46,12 +45,12 @@ public class SingleApplicationLogMonitor implements LogMonitorFunction<SkipableL
         LOG.info("Processing started for {}",configuration.getApplication_name());
         try {
             loadlogs();
-            notifyUsers();
+            handleLogEvents();
             updateDataSource(logSource);
         }catch (IOException ex){
-            ex.printStackTrace();
+            //ex.printStackTrace();
             LOG.error(ex.getLocalizedMessage());
-            System.out.printf("Failed to process applicatio {}",configuration.getApplication_name());
+            LOG.error("Failed to process application {}",configuration.getApplication_name());
         }
     }
 
@@ -67,16 +66,19 @@ public class SingleApplicationLogMonitor implements LogMonitorFunction<SkipableL
     }
 
     @Override
-    public void notifyUsers() {
-        //build the chain with required Notfication types
+    public void handleLogEvents() {
+        //build the chain with required Notification types
         LOG.info("Notifying users process starting for application {}",configuration.getApplication_name());
 
         Handler<LogEventHandlerRequest> smsNotificationHandler =
-                new LogEventNotificationHandler(new SmsNotifier<LogEvent>(),new LogEventHandlerRequestEligibility("sms"));
+                new LogEventNotificationHandler(new SmsNotifier<LogEvent>(),new ErrorLogEventHandlerRequestByTypeEligibility("sms"));
 
         Handler<LogEventHandlerRequest> emailNotificationHandler =
-                new LogEventNotificationHandler(new EmailNotifier<LogEvent>(),new LogEventHandlerRequestEligibility("email"));
+                new LogEventNotificationHandler(new EmailNotifier<LogEvent>(),new ErrorLogEventHandlerRequestByTypeEligibility("email"));
+
+        Handler<LogEventHandlerRequest> logEventDump = new LogEventLoggerHandler(LoggerFactory.getLogger(configuration.getApplication_name()));
         smsNotificationHandler.setNextInChain(emailNotificationHandler);
+        //emailNotificationHandler.setNextInChain(logEventDump);
 
         while(logEvents.hasNext()){
             LogEvent event = logEvents.next();

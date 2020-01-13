@@ -11,7 +11,7 @@ public class LogEventFactory {
                 logEvent = new ErrorLogEvent();
                 break;
 
-            case "Trace":
+            case "TRACE":
                 logEvent = new TraceLogEvent();
                 break;
 

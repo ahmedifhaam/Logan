@@ -7,6 +7,7 @@ import org.xelvias.logan.logs.events.LogEvent;
 import org.xelvias.logan.logs.parsers.LogEventParser;
 import org.xelvias.logan.state.StateManager;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class SkippableLocalFileLogSource implements SkipableLogSource {
 
     public SkippableLocalFileLogSource(String path, StateManager stateManager) throws IOException {
         this.path = path;
-        fileAccess = new RandomAccessFile(path,"rw");
+        if(!(new File(path).exists())) throw new IOException();
+        fileAccess = new RandomAccessFile(path,"r");
         this.stateManager = stateManager;
     }
 

@@ -22,4 +22,12 @@ public abstract class LogEvent implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "LogEvent{" +
+                "timestamp=" + timestamp +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
